@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+.login-signup {
+    height: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.top-login-signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.bottom-login-signup {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-width: 82%;
+}
+
+h1 {
+    font-family: 'Audiowide', cursive;
+    color: #000836;
+}
+
+.branding {
+    font-family: 'Audiowide', cursive;
+    font-size: 5rem;
+    color: #000836;
+}
+
+.form-floating {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.btn {
+    margin: 1rem auto;
+}
