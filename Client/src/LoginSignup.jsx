@@ -16,6 +16,7 @@ const LoginSignup = () => {
         rePassword: ''
     });
     const [loginOrSignup, setLoginOrSignup] = useState(false);
+    const [errors, setErrors] = useState({});
     const [showError, setShowError] = useState(false);
 
     const handleLoginFields = (e) => {
@@ -24,8 +25,43 @@ const LoginSignup = () => {
     };
     const handleSignupFields = (e) => {
         const { name, value } = e.target;
+        setErrors({ ...errors, [name]: null })
         setSignupFormHolder({ ...signupFormHolder, [name]: value });
     };
+
+    const validateLocally = () => {
+        const newErrors = {};
+
+        const emailValid = /\S+@\S+\.\S+/.test(signupFormHolder.email);
+        if (emailValid) {
+            newErrors.email = null;
+        } else {
+            newErrors.email = "Invalid email";
+        }
+
+        const userNameValid = /^[a-zA-Z]{4,}$/.test(signupFormHolder.username);
+        if (userNameValid) {
+            newErrors.username = null;
+        } else {
+            newErrors.username = "Must contain at least 4 characters";
+        }
+
+        const passwordValid = /^[a-zA-Z]{4,}$/.test(signupFormHolder.password);
+        if (passwordValid) {
+            newErrors.password = null;
+        } else {
+            newErrors.password = "Password must contain at least 4 characters";
+        }
+
+        const rePasswordValid = signupFormHolder.rePassword === signupFormHolder.password;
+        if (rePasswordValid) {
+            newErrors.rePassword = null;
+        } else {
+            newErrors.rePassword = "Must match the password";
+        }
+
+        setErrors(newErrors);
+    }
 
     const handleLoginButton = async (e) => {
         // try {
@@ -38,7 +74,10 @@ const LoginSignup = () => {
     };
 
     const handleSignupButton = async (e) => {
-        setLoginOrSignup(false);
+        e.preventDefault();
+        validateLocally();
+
+        //setLoginOrSignup(false);
         // const newUser = {
         //     first_name: signupFormHolder.first_name,
         //     last_name: signupFormHolder.last_name,
@@ -70,50 +109,67 @@ const LoginSignup = () => {
         <div className="login-signup">
             <div className="top-login-signup">
                 <h1>Welcome to</h1>
-                <p class="branding">TETRIS</p>
+                <p className="branding">TETRIS</p>
             </div>
 
             <div className="bottom-login-signup">
                 {!loginOrSignup ? (<><p>Log in to play:</p>
-                    <FloatingLabel
-                        controlId="floatingInput"
-                        label="Email address"
-
-                    >
-                        <Form.Control type="email" placeholder="name@example.com" name="email" value={loginFormHolder.email} onChange={handleLoginFields} />
-                    </FloatingLabel>
-
-                    <FloatingLabel label="Password">
-                        <Form.Control type="password" placeholder="Password" name="password" value={loginFormHolder.password} onChange={handleLoginFields} />
-                    </FloatingLabel>
-
-                    <Button variant="dark" onClick={handleLoginButton}>Log In</Button>
-                    <p>Don't have an account yet? <a href="#" onClick={e => setLoginOrSignup(true)}>Sign up</a></p></>)
-
-                    : (<><p>Enter your details:</p>
-                        <FloatingLabel
-                            controlId="floatingInput"
-                            label="User name"
-                        >
-                            <Form.Control placeholder="username" name="email" value={signupFormHolder.username} onChange={handleSignupFields} />
-                        </FloatingLabel>
-
+                    <Form>
                         <FloatingLabel
                             controlId="floatingInput"
                             label="Email address"
+
                         >
-                            <Form.Control type="email" placeholder="name@example.com" name="email" value={signupFormHolder.email} onChange={handleSignupFields} />
+                            <Form.Control type="email" placeholder="name@example.com" name="email" value={loginFormHolder.email} onChange={handleLoginFields} />
                         </FloatingLabel>
 
                         <FloatingLabel label="Password">
-                            <Form.Control type="password" placeholder="Password" name="password" value={signupFormHolder.password} onChange={handleSignupFields} />
+                            <Form.Control type="password" placeholder="Password" name="password" value={loginFormHolder.password} onChange={handleLoginFields} />
                         </FloatingLabel>
 
-                        <FloatingLabel label="Confirm password">
-                            <Form.Control type="password" placeholder="rePassword" name="rePassword" value={signupFormHolder.rePassword} onChange={handleSignupFields} />
-                        </FloatingLabel>
+                        <Button type="submit" variant="dark" onClick={handleLoginButton}>Log In</Button>
+                        <p>Don't have an account yet? <a href="#" onClick={e => setLoginOrSignup(true)}>Sign up</a></p></Form></>)
 
-                        <Button variant="dark" onClick={handleSignupButton}>Sign up</Button>
+                    : (<><p>Fill your details:</p>
+                        <Form noValidate onSubmit={handleSignupButton}>
+                            <Form.Group>
+                                <FloatingLabel label="User name">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="username"
+                                        name="username"
+                                        value={signupFormHolder.username}
+                                        onChange={handleSignupFields}
+                                        isInvalid={!!errors.username} />
+                                    <Form.Control.Feedback type="invalid" >{errors.username}</Form.Control.Feedback>
+                                </FloatingLabel>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <FloatingLabel label="Email address">
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="name@example.com"
+                                        name="email"
+                                        value={signupFormHolder.email}
+                                        onChange={handleSignupFields}
+                                        isInvalid={!!errors.email} />
+                                    <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                                </FloatingLabel>
+                            </Form.Group>
+
+                            <FloatingLabel label="Password">
+                                <Form.Control type="password" placeholder="Password" name="password" value={signupFormHolder.password} onChange={handleSignupFields} isInvalid={!!errors.password} />
+                                <Form.Control.Feedback type="invalid" >{errors.password}</Form.Control.Feedback>
+                            </FloatingLabel>
+
+                            <FloatingLabel label="Confirm password">
+                                <Form.Control type="password" placeholder="rePassword" name="rePassword" value={signupFormHolder.rePassword} onChange={handleSignupFields} isInvalid={!!errors.rePassword} />
+                                <Form.Control.Feedback type="invalid" >{errors.rePassword}</Form.Control.Feedback>
+                            </FloatingLabel>
+
+                            <Button type="submit" variant="dark">Sign up</Button>
+                        </Form>
                     </>)}
 
 

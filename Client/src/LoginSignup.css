@@ -42,3 +42,7 @@ h1 {
 .btn {
     margin: 1rem auto;
 }
+
+.invalid-feedback {
+    color: black;
+}
