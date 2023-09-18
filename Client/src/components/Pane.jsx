@@ -1,5 +1,5 @@
 import React from 'react';
-import './Pane.css';
+import '../css/Pane.css';
 import LoginSignup from './LoginSignup';
 
 const Pane = () => {

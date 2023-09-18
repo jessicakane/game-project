@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
-import './LoginSignup.css';
+import '../css/LoginSignup.css';
 
 const LoginSignup = () => {
     const [loginFormHolder, setLoginFormHolder] = useState({
