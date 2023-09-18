@@ -1,5 +1,5 @@
 import './css/App.css';
-import Pane from './Pane';
+import Pane from './components/Pane';
 import { Tetris } from './components/pages/Tetris';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
