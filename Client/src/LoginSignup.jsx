@@ -108,7 +108,7 @@ const LoginSignup = () => {
     return (
         <div className="login-signup">
             <div className="top-login-signup">
-                <h1>Welcome to</h1>
+                <h1>Let's play</h1>
                 <p className="branding">TETRIS</p>
             </div>
 
