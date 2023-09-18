@@ -1,25 +1,88 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Stage } from '../Stage';
 import { Display } from '../Display';
 import { StartButton } from '../StartButton';
-import { createStage } from '../../gameHelpers';
 import { StyledTetris } from '../styles/styledTetris';
 import { StyledTetrisWrapper } from '../styles/styledTetris';
+import { usePlayer } from '../../hooks/usePlayer';
+import { useStage } from '../../hooks/useStage';
+import { createStage } from '../../gameHelpers';
+import { checkCollision } from '../../gameHelpers';
 
 export const Tetris = () => {
+
+  const [dropTime, setDropTime] = useState(null);
+  const [gameOver, setGameOver] = useState(false);
+
+  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
+  const [stage, setStage] = useStage(player, resetPlayer);
+
+  const movePlayer = dir => {
+    if (!checkCollision(player, stage, {x: dir, y: 0})) {
+    console.log(dir);
+    updatePlayerPos({x: dir, y: 0, collided: false})}
+  }
+
+  const startGame = () => {
+    //reset everything
+    setStage(createStage());
+    resetPlayer();
+    setGameOver(false);
+
+
+  }
+
+  const drop = () => {
+    if (!checkCollision(player, stage, {x: 0, y: 1})) {
+    updatePlayerPos({x:0, y:1, collided: false})} else {
+      if (player.pos.y < 1) {
+        console.log('Game over!')
+        setGameOver(true);
+        setDropTime(null);
+      }
+      updatePlayerPos({x: 0, y: 0, collided: true});
+    }
+  }
+
+  const dropPlayer = () => {
+    drop()
+  }
+
+  const move = ({keyCode}) => {
+    if (!gameOver) {
+      if (keyCode === 37) {
+        //left arrow
+        movePlayer(-1);
+      } else if (keyCode === 39) {
+        //right arrow
+        movePlayer(1);
+      } else if (keyCode === 40) {
+        //down arrow
+        dropPlayer()
+      } else if (keyCode === 38) {
+        playerRotate(stage, 1)
+      } else if (keyCode === 16) {
+        playerRotate(stage, -1)
+      }
+    }
+  }
+
   return (
-    <StyledTetrisWrapper>
+    <StyledTetrisWrapper role = "button" tabIndex ="0" onKeyDown = {e => move(e)}>
       <StyledTetris>
-        <Stage stage = {createStage()}/>
+        <Stage stage = {stage}/>
         <aside>
+          {gameOver ? <Display gameOver = {gameOver} text = "Game Over" /> : 
             <div>
             <Display text = "Score" />
             <Display text = "Rows" />
             <Display text = "Level" />
-            </div>
-            <StartButton/>
+            </div>}
+            <StartButton callback = {startGame}/>
         </aside>
         </StyledTetris>
     </StyledTetrisWrapper>
   )
 }
+
+//we're getting the illusion of movement by clearing the cell where the shape previously was and coloring the next cell on an interval -- there are better ways to do this using animations if we have time
