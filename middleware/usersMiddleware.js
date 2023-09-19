@@ -18,7 +18,7 @@ async function isNewUser(req, res, next) {
 }
 
 async function isExistingUser(req, res, next) {
-  const user = await getUserByEmailModel(req.body.loginEmail);
+  const user = await getUserByEmailModel(req.body.email);
   // console.log(req.body);
   if (user) {
     req.body.user = user;

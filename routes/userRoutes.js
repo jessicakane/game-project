@@ -24,7 +24,7 @@ router.post(
 
 router.post(
   '/login',
-  // /*validateBody(signupSchema)*/ isExistingUser,
+  /*validateBody(signupSchema)*/ isExistingUser,
   userControllers.login
 );
 
