@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.fc32188c.css",
+    "main.js": "/static/js/main.52f8f73b.js",
+    "static/js/787.57add240.chunk.js": "/static/js/787.57add240.chunk.js",
+    "static/media/Pixel-LCD-7.woff": "/static/media/Pixel-LCD-7.63d9c15192fdeab6d3a6.woff",
+    "index.html": "/index.html",
+    "main.fc32188c.css.map": "/static/css/main.fc32188c.css.map",
+    "main.52f8f73b.js.map": "/static/js/main.52f8f73b.js.map",
+    "787.57add240.chunk.js.map": "/static/js/787.57add240.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fc32188c.css",
+    "static/js/main.52f8f73b.js"
+  ]
+}
