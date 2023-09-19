@@ -22,11 +22,10 @@ router.post(
   userControllers.signup
 );
 
-// login
-// router.post(
-//   '/login',
-//   /*validateBody(signupSchema)*/ isExistingUser,
-//   userControllers.login
-// );
+router.post(
+  '/login',
+  // /*validateBody(signupSchema)*/ isExistingUser,
+  userControllers.login
+);
 
 module.exports = router;

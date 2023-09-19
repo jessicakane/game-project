@@ -29,24 +29,4 @@ async function addUserModel(newUser) {
   }
 }
 
-// need to be fixed to mongoDB
-// async function getUserByEmailModel(email) {
-//   try {
-//     const user = await dbConnection('users').where({ email: email }).first();
-//     return user;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
-// need to be fixed to mongoDB
-// async function addUserModel(newUser) {
-//   try {
-//     const [id] = await dbConnection('users').insert(newUser);
-//     return id;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
 module.exports = { createNewUser, getUserByEmailModel, addUserModel };

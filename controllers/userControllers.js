@@ -36,6 +36,7 @@ async function signup(req, res) {
   }
 }
 async function login(req, res) {
+  console.log(req.body);
   console.log(req.body.loginPassword); //loginFormHolder.password} from FE
   const { loginPassword, user } = req.body;
 
@@ -67,4 +68,4 @@ async function login(req, res) {
   }
 }
 
-module.exports = { createNewUserController, signup };
+module.exports = { createNewUserController, signup, login };
