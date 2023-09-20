@@ -6,11 +6,17 @@ export const StyledDisplay = styled.div`
     align-items: center;
     margin: 0 0 20px 0;
     padding: 20px;
-    border: 4px solid #333;
     min-height: 30px;
     width: 100%;
     border-radius: 20px;
     color: ${props => (props.gameOver ? 'red' : '#999')};
-    background: #000;
     font-family: 'Audiowide', Pixel, Arial, Helvetica, sans-serif;
-    font-size: 0.8rem;`
+    font-size: 0.8rem;
+    background: rgba( 0, 0, 0, 0.6 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 4.5px );
+    -webkit-backdrop-filter: blur( 4.5px );
+    border-radius: 10px;`
+
+//background: #000;
+//border: 4px solid #333;
