@@ -75,7 +75,8 @@ const LoginSignup = () => {
 
     const handleSignupButton = async (e) => {
         e.preventDefault();
-        validateLocally();
+        console.log('Hi');
+        //validateLocally();
 
         //setLoginOrSignup(false);
         // const newUser = {
