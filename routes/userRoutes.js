@@ -10,9 +10,6 @@ const {
   auth, //might not need auth
 } = require('../middleware/usersMiddleware');
 
-//jessie's test route
-router.post('/createuser', userControllers.createNewUserController);
-
 //lukas's signup
 router.post(
   '/signup',
@@ -27,5 +24,7 @@ router.post(
   /*validateBody(signupSchema)*/ isExistingUser,
   userControllers.login
 );
+
+router.put('/updatescore', userControllers.updateUserScore)
 
 module.exports = router;

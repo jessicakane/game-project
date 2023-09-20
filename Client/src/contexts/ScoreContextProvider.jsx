@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from 'axios';
 
 const ScoreContext = createContext();
@@ -18,8 +18,61 @@ export const ScoreContextProvider = ({children}) => {
         }
     }
 
-    const checkIfHighScore = async(score) => {
+    const checkIfHighScore = (score) => {
+        console.log('high score is', userHighScore)
+        if (score.score > userHighScore) {
+            const newScore = {
+                highScore: score.score,
+                userId: score.userId
+            }
+            return updateUserScore(newScore);
+        }
+        return false
+    }
 
+    const updateUserScore = async(score) => {
+        try {
+            await axios.put('http://localhost:8080/api/users/updatescore', score)
+            setUserHighScore(score.highScore);
+            localStorage.setItem('highScore', score.highScore);
+            return true;
+        } catch(error) {
+            console.error(error)
+            return false;
+        }
+    }
+
+    const fetchHighScores = async() => {
+        try {
+        const res = await axios.get('http://localhost:8080/api/scores/highscores');
+        const highScores = res.data;
+        console.log(highScores);
+        return highScores;
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
+    const fetchUsersScores = async(userId) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/scores/usersscores/${userId}`);
+            const highScores = res.data;
+            console.log('users scores are', highScores);
+            return highScores;
+            } catch(error) {
+                console.error(error)
+            }
+    }
+
+    const fetchUsersLatestScore = async(userId) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/scores/${userId}`);
+            const latestScore = res.data;
+            console.log('users latest score is:', latestScore);
+            return latestScore
+        } catch(error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -28,7 +81,11 @@ export const ScoreContextProvider = ({children}) => {
                 userHighScore,
                 setUserHighScore,
                 addNewScore,
-                checkIfHighScore
+                checkIfHighScore,
+                updateUserScore,
+                fetchHighScores,
+                fetchUsersScores,
+                fetchUsersLatestScore
             }
         }>
             {children} </ScoreContext.Provider>

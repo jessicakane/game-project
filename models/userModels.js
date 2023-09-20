@@ -1,14 +1,6 @@
 const { User } = require('../schemas/usersSchema');
+const mongoose = require('mongoose');
 
-//jessie's test
-async function createNewUser(userData) {
-  try {
-    const user = await User.create(userData);
-    return user;
-  } catch (error) {
-    throw error;
-  }
-}
 
 // mongoDB
 async function getUserByEmailModel(email) {
@@ -29,4 +21,35 @@ async function addUserModel(newUser) {
   }
 }
 
-module.exports = { createNewUser, getUserByEmailModel, addUserModel };
+async function updateUserModel(newInfo) {
+    try {
+        const {userId, highScore} = newInfo;
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: { highScore } }, 
+            { new: true } 
+          );
+          return updatedUser
+    } catch (error) {
+        console.error(error)
+        return false;
+    }
+}
+
+async function getUserNameById(userId) {
+    try {
+    const ObjectId = mongoose.Types.ObjectId;
+    const objectId = new ObjectId(userId);
+    const user = await User.findOne({ _id: objectId }).select('userName');
+    if (!user) {
+        return null;
+      }
+    return user.userName;
+    } catch (error) {
+        console.error('Error fetching userName by ID:', error)
+        throw error;
+    }
+
+}
+
+module.exports = { updateUserModel, getUserByEmailModel, addUserModel, getUserNameById};
