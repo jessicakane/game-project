@@ -66,7 +66,8 @@ async function login(req, res) {
         res.status(200).json({
           token: token,
           userName: user.userName,
-          highScore: user.highScore
+          highScore: user.highScore,
+          userId: user._id.toString()
         });
       }
     });

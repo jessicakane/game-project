@@ -11,6 +11,8 @@ export const AuthContextProvider = ({children}) => {
     const storedUserName = localStorage.getItem('userName');
     const [userName, setUserName] = useState(storedUserName || false);
     const {userHighScore, setUserHighScore} = useContext(ScoreContext);
+    const storedId = localStorage.getItem('userId');
+    const [userId, setUserId] = useState(storedId || false);
 
     const signUserUp = async(userInfo, setSignupFormHolder) => {
         try {
@@ -40,6 +42,8 @@ export const AuthContextProvider = ({children}) => {
             localStorage.setItem('userName', res.data.userName);
             setUserHighScore(res.data.highScore);
             localStorage.setItem('highScore', res.data.highScore);
+            setUserId(res.data.userId);
+            localStorage.setItem('userId', res.data.userId);
             return(res.data.token);
         } catch (err) {
             console.log(err);
@@ -51,7 +55,9 @@ export const AuthContextProvider = ({children}) => {
         <AuthContext.Provider value={
             {
                 signUserUp,
-                logUserIn
+                logUserIn,
+                userId,
+                token
             }
         }>
             {children} </AuthContext.Provider>

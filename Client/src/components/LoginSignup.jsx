@@ -26,7 +26,7 @@ const LoginSignup = () => {
     const [errors, setErrors] = useState({});
     const [showError, setShowError] = useState(false);
 
-    const {signUserUp, logUserIn, token} = useContext(AuthContext);
+    const {signUserUp, logUserIn, token, userId} = useContext(AuthContext);
 
     const handleLoginFields = (e) => {
         const { name, value } = e.target;
@@ -80,6 +80,7 @@ const LoginSignup = () => {
             password: loginFormHolder.password
         }
         const res = await logUserIn(userInfo);
+        console.log(userId);
         if (res) {
             navigate('/game')
         }

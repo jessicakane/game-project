@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Stage} from '../Stage';
 import {Display} from '../Display';
 import {StartButton} from '../StartButton';
@@ -10,11 +10,14 @@ import {createStage} from '../../gameHelpers';
 import {checkCollision} from '../../gameHelpers';
 import {useInterval} from '../../hooks/useInterval';
 import { useGameStatus } from '../../hooks/useGameStatus';
+import { ScoreContext } from '../../contexts/ScoreContextProvider';
 
 export const Tetris = () => {
 
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
+
+    const {addNewScore, checkIfHighScore} = useContext(ScoreContext);
 
     const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -96,6 +99,13 @@ export const Tetris = () => {
     useInterval(() => {
         drop();
     }, dropTime)
+
+    useEffect(() => {
+      if (gameOver) {
+        addNewScore(score);
+        checkIfHighScore(score);
+      }
+    }, [gameOver])
 
     return (
         <StyledTetrisWrapper role="button" tabIndex="0" onKeyDown= {e => move(e)}
