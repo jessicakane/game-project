@@ -63,8 +63,10 @@ async function login(req, res) {
           expiresIn: '999h',
         });
 
-        res.send({
+        res.status(200).json({
           token: token,
+          userName: user.userName,
+          highScore: user.highScore
         });
       }
     });
