@@ -89,7 +89,8 @@ const LoginSignup = () => {
 
     const handleSignupButton = async (e) => {
         e.preventDefault();
-        validateLocally();
+        console.log('Hi');
+        //validateLocally();
 
         console.log('function running')
 
