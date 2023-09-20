@@ -1,14 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Stage} from '../Stage';
-import {Display} from '../Display';
-import {StartButton} from '../StartButton';
-import {StyledTetris} from '../styles/styledTetris';
-import {StyledTetrisWrapper} from '../styles/styledTetris';
-import {usePlayer} from '../../hooks/usePlayer';
-import {useStage} from '../../hooks/useStage';
-import {createStage} from '../../gameHelpers';
-import {checkCollision} from '../../gameHelpers';
-import {useInterval} from '../../hooks/useInterval';
+import React, { useContext, useEffect, useState } from 'react';
+import { Stage } from '../Stage';
+import { Display } from '../Display';
+import { StartButton } from '../StartButton';
+import { StyledTetris } from '../styles/styledTetris';
+import { StyledTetrisWrapper } from '../styles/styledTetris';
+import { usePlayer } from '../../hooks/usePlayer';
+import { useStage } from '../../hooks/useStage';
+import { createStage } from '../../gameHelpers';
+import { checkCollision } from '../../gameHelpers';
+import { useInterval } from '../../hooks/useInterval';
 import { useGameStatus } from '../../hooks/useGameStatus';
 import { ScoreContext } from '../../contexts/ScoreContextProvider';
 import { AuthContext } from '../../contexts/AuthContextProvider';
@@ -18,8 +18,8 @@ export const Tetris = () => {
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
 
-    const {addNewScore, checkIfHighScore} = useContext(ScoreContext);
-    const {userId, token} = useContext(AuthContext);
+    const { addNewScore, checkIfHighScore } = useContext(ScoreContext);
+    const { userId, token } = useContext(AuthContext);
 
     const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -30,8 +30,8 @@ export const Tetris = () => {
             x: dir,
             y: 0
         })) {
-            
-            updatePlayerPos({x: dir, y: 0, collided: false})
+
+            updatePlayerPos({ x: dir, y: 0, collided: false })
         }
     }
 
@@ -47,32 +47,32 @@ export const Tetris = () => {
     }
 
     const drop = () => {
-      // increase level when player has cleared 10 rows
-      if (rows > (level + 1) *10) {
-        setLevel(prev => prev+1);
-        
-        //increase speed
-        setDropTime(1000/(level+1) + 200)
-      }
+        // increase level when player has cleared 10 rows
+        if (rows > (level + 1) * 10) {
+            setLevel(prev => prev + 1);
+
+            //increase speed
+            setDropTime(1000 / (level + 1) + 200)
+        }
         if (!checkCollision(player, stage, {
             x: 0,
             y: 1
         })) {
-            updatePlayerPos({x: 0, y: 1, collided: false})
+            updatePlayerPos({ x: 0, y: 1, collided: false })
         } else {
             if (player.pos.y < 1) {
-                
+
                 setGameOver(true);
                 setDropTime(null);
             }
-            updatePlayerPos({x: 0, y: 0, collided: true});
+            updatePlayerPos({ x: 0, y: 0, collided: true });
         }
     }
 
-    const keyUp = ({keyCode}) => {
+    const keyUp = ({ keyCode }) => {
         if (!gameOver) {
             if (keyCode === 40) {
-              setDropTime(1000/(level+1) + 200)
+                setDropTime(1000 / (level + 1) + 200)
             }
         }
     }
@@ -82,7 +82,7 @@ export const Tetris = () => {
         drop()
     }
 
-    const move = ({keyCode}) => {
+    const move = ({ keyCode }) => {
         if (!gameOver) {
             if (keyCode === 37) { // left arrow
                 movePlayer(-1);
@@ -103,30 +103,30 @@ export const Tetris = () => {
     }, dropTime)
 
     useEffect(() => {
-      if (gameOver) {
-        const scoreObj = {
-          userId: userId,
-          score: score
+        if (gameOver) {
+            const scoreObj = {
+                userId: userId,
+                score: score
+            }
+            addNewScore(scoreObj);
+            checkIfHighScore(scoreObj);
         }
-        addNewScore(scoreObj);
-        checkIfHighScore(scoreObj);
-      }
     }, [gameOver])
 
     return (
-        <StyledTetrisWrapper role="button" tabIndex="0" onKeyDown= {e => move(e)}
+        <StyledTetrisWrapper className="tetris-wrapper" role="button" tabIndex="0" onKeyDown={e => move(e)}
             onKeyUp={keyUp}>
-            <StyledTetris>
-                <Stage stage={stage}/>
+            <StyledTetris className="styled-tetris">
+                <Stage className="stage" stage={stage} />
                 <aside> {
                     gameOver ? <Display gameOver={gameOver}
-                        text="Game Over"/> : <div>
-                        <Display text={`Score: ${score}`}/>
-                        <Display text={`Rows: ${rows}`}/>
-                        <Display text={`Level: ${level}`}/>
+                        text="Game Over" /> : <div>
+                        <Display text={`Score: ${score}`} />
+                        <Display text={`Rows: ${rows}`} />
+                        <Display text={`Level: ${level}`} />
                     </div>
                 }
-                    <StartButton callback={startGame}/>
+                    <StartButton callback={startGame} />
                 </aside>
             </StyledTetris>
         </StyledTetrisWrapper>

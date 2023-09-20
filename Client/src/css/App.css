@@ -1,6 +1,5 @@
 .App {
   height: 100vh;
-  padding: 1rem;
 }
 
 .pane {
@@ -10,6 +9,11 @@
   transform: translate(-50%, -50%);
   min-width: 33vw;
   max-width: 95vw;
+}
+
+.tetris {
+  height: 100%;
+  width: 100%;
 }
 
 body {

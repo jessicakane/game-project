@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 
 export const StyledTetrisWrapper = styled.div`
-    width: 100vw;
-    hegiht: 100vh;
+    width: 100%;
+    height: 100%;
     `
 
 export const StyledTetris = styled.div`
     display: flex;
-    align-items: flex-start;
-    padding: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 100%;
+    height: 100%;
     aside {
         width: 100%;
         max-width: 200px;
