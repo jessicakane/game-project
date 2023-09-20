@@ -19,12 +19,13 @@ export const ScoreContextProvider = ({children}) => {
     }
 
     const checkIfHighScore = (score) => {
-        if (score.highScore > userHighScore) {
+        console.log('high score is', userHighScore)
+        if (score.score > userHighScore) {
             const newScore = {
                 highScore: score.score,
                 userId: score.userId
             }
-            return updateUserScore(newScore)
+            return updateUserScore(newScore);
         }
         return false
     }
@@ -32,6 +33,9 @@ export const ScoreContextProvider = ({children}) => {
     const updateUserScore = async(score) => {
         try {
             await axios.put('http://localhost:8080/api/users/updatescore', score)
+            setUserHighScore(score.highScore);
+            localStorage.setItem('highScore', score.highScore);
+            return true;
         } catch(error) {
             console.error(error)
             return false;
@@ -44,7 +48,8 @@ export const ScoreContextProvider = ({children}) => {
                 userHighScore,
                 setUserHighScore,
                 addNewScore,
-                checkIfHighScore
+                checkIfHighScore,
+                updateUserScore
             }
         }>
             {children} </ScoreContext.Provider>

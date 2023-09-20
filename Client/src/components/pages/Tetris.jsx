@@ -112,6 +112,7 @@ export const Tetris = () => {
             checkIfHighScore(scoreObj);
         }
     }, [gameOver])
+    
 
     return (
         <StyledTetrisWrapper className="tetris-wrapper" role="button" tabIndex="0" onKeyDown={e => move(e)}
