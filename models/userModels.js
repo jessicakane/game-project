@@ -1,15 +1,5 @@
 const { User } = require('../schemas/usersSchema');
 
-//jessie's test
-async function createNewUser(userData) {
-  try {
-    const user = await User.create(userData);
-    return user;
-  } catch (error) {
-    throw error;
-  }
-}
-
 // mongoDB
 async function getUserByEmailModel(email) {
   try {
@@ -29,4 +19,19 @@ async function addUserModel(newUser) {
   }
 }
 
-module.exports = { createNewUser, getUserByEmailModel, addUserModel };
+async function updateUserModel(newInfo) {
+    try {
+        const {userId, highScore} = newInfo;
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: { highScore } }, 
+            { new: true } 
+          );
+          return updatedUser
+    } catch (error) {
+        console.error(error)
+        return false;
+    }
+}
+
+module.exports = { updateUserModel, getUserByEmailModel, addUserModel };

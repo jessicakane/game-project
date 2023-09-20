@@ -18,8 +18,24 @@ export const ScoreContextProvider = ({children}) => {
         }
     }
 
-    const checkIfHighScore = async(score) => {
+    const checkIfHighScore = (score) => {
+        if (score.highScore > userHighScore) {
+            const newScore = {
+                highScore: score.score,
+                userId: score.userId
+            }
+            return updateUserScore(newScore)
+        }
+        return false
+    }
 
+    const updateUserScore = async(score) => {
+        try {
+            await axios.put('http://localhost:8080/api/users/updatescore', score)
+        } catch(error) {
+            console.error(error)
+            return false;
+        }
     }
 
     return (
