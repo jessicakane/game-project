@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from 'axios';
 
 const ScoreContext = createContext();
@@ -42,6 +42,17 @@ export const ScoreContextProvider = ({children}) => {
         }
     }
 
+    const fetchHighScores = async() => {
+        try {
+        const res = await axios.get('http://localhost:8080/api/scores/highscores');
+        const highScores = res.data;
+        console.log(highScores);
+        return highScores;
+        } catch(error) {
+            console.error(error)
+        }
+    }
+
     return (
         <ScoreContext.Provider value={
             {
@@ -49,7 +60,8 @@ export const ScoreContextProvider = ({children}) => {
                 setUserHighScore,
                 addNewScore,
                 checkIfHighScore,
-                updateUserScore
+                updateUserScore,
+                fetchHighScores
             }
         }>
             {children} </ScoreContext.Provider>

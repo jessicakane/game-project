@@ -1,4 +1,4 @@
-const {createNewScore} = require('../models/scoreModels');
+const {createNewScore, getHighScores} = require('../models/scoreModels');
 const mongoose = require('mongoose');
 
 const createNewScoreController = async(req, res) => {
@@ -14,4 +14,14 @@ const createNewScoreController = async(req, res) => {
     }
   }
 
-  module.exports = {createNewScoreController}
+const getHighScoresController = async(req, res) => {
+    try {
+        const highScores = await getHighScores();
+        res.status(201).json(highScores)
+    } catch(error) {
+        console.error(error)
+        res.status(500).send(error.message)
+    }
+}
+
+  module.exports = {createNewScoreController, getHighScoresController}

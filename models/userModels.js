@@ -1,4 +1,6 @@
 const { User } = require('../schemas/usersSchema');
+const mongoose = require('mongoose');
+
 
 // mongoDB
 async function getUserByEmailModel(email) {
@@ -34,4 +36,20 @@ async function updateUserModel(newInfo) {
     }
 }
 
-module.exports = { updateUserModel, getUserByEmailModel, addUserModel };
+async function getUserNameById(userId) {
+    try {
+    const ObjectId = mongoose.Types.ObjectId;
+    const objectId = new ObjectId(userId);
+    const user = await User.findOne({ _id: objectId }).select('userName');
+    if (!user) {
+        return null;
+      }
+    return user.userName;
+    } catch (error) {
+        console.error('Error fetching userName by ID:', error)
+        throw error;
+    }
+
+}
+
+module.exports = { updateUserModel, getUserByEmailModel, addUserModel, getUserNameById};
