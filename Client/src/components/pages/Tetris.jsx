@@ -25,6 +25,8 @@ export const Tetris = () => {
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
     const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared)
 
+    const [showHighScores, setShowHighScores] = useState(false);
+
     const movePlayer = dir => {
         if (!checkCollision(player, stage, {
             x: dir,
@@ -36,6 +38,7 @@ export const Tetris = () => {
     }
 
     const startGame = () => { // reset everything
+        setShowHighScores(false);
         setStage(createStage());
         setDropTime(1200);
         resetPlayer();
@@ -110,6 +113,7 @@ export const Tetris = () => {
             }
             addNewScore(scoreObj);
             checkIfHighScore(scoreObj);
+            setShowHighScores(true);
         }
     }, [gameOver])
 
@@ -117,7 +121,7 @@ export const Tetris = () => {
         <StyledTetrisWrapper className="tetris-wrapper" role="button" tabIndex="0" onKeyDown={e => move(e)}
             onKeyUp={keyUp}>
             <StyledTetris className="styled-tetris">
-                <Stage className="stage" stage={stage} />
+                <Stage className="stage" stage={stage} showHighScores={showHighScores} />
                 <aside> {
                     gameOver ? <Display gameOver={gameOver}
                         text="Game Over" /> : <div>
