@@ -1,4 +1,8 @@
-const { createNewUser, addUserModel } = require('../models/userModels');
+const {
+  createNewUser,
+  addUserModel,
+  getUserByEmailModel,
+} = require('../models/userModels');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
@@ -36,11 +40,15 @@ async function signup(req, res) {
   }
 }
 async function login(req, res) {
-  console.log(req.body.loginPassword); //loginFormHolder.password} from FE
-  const { loginPassword, user } = req.body;
-
+  console.log(req.body);
+  console.log(req.body.password);
+  const { password, email } = req.body; //email
+  //query to DB to find user by email that is stored in in DB, getting the user
   try {
-    bcrypt.compare(loginPassword, user.password, (err, result) => {
+    const user = await getUserByEmailModel(email);
+    console.log(req.body.password);
+    console.log(user.password);
+    bcrypt.compare(password, user.password, (err, result) => {
       if (!result) {
         return res.status(401).send('Incorrect password');
       }
@@ -55,16 +63,19 @@ async function login(req, res) {
           expiresIn: '999h',
         });
 
-        res.send({
+        res.status(200).json({
           token: token,
+          userName: user.userName,
+          highScore: user.highScore,
+          userId: user._id.toString()
         });
       }
     });
-    // res.send("login success");
+    // res.send('login success'); // will give me an error cannot send something after i sent already the headers
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
   }
 }
 
-module.exports = { createNewUserController, signup };
+module.exports = { createNewUserController, signup, login };

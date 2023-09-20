@@ -16,17 +16,16 @@ router.post('/createuser', userControllers.createNewUserController);
 //lukas's signup
 router.post(
   '/signup',
-  //   /*validateBody(signupSchema)*/ passwordMatch,
-  //   isNewUser,
-  //   hashPwd,
+  /*validateBody(signupSchema)*/ passwordMatch,
+  isNewUser,
+  hashPwd,
   userControllers.signup
 );
 
-// login
-// router.post(
-//   '/login',
-//   /*validateBody(signupSchema)*/ isExistingUser,
-//   userControllers.login
-// );
+router.post(
+  '/login',
+  /*validateBody(signupSchema)*/ isExistingUser,
+  userControllers.login
+);
 
 module.exports = router;

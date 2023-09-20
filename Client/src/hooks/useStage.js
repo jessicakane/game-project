@@ -6,6 +6,21 @@ export const useStage = (player, resetPlayer) => {
     const [rowsCleared, setRowsCleared] = useState(0);
 
     useEffect(() => {
+        setRowsCleared(0);
+
+        const sweepRows = newStage => 
+            newStage.reduce((ack, row) => {
+                if (row.findIndex(cell => cell[0] === 0) === -1) {
+                    //this means we haven't found an empty cell in the row, ie row is full and should be swept
+                    const newRowsCleared = rowsCleared + 1;
+                    setRowsCleared(newRowsCleared);
+                    ack.unshift(new Array(newStage[0].length).fill([0, 'clear']));
+                    return ack;
+                }
+                ack.push(row);
+                return ack;
+            }, []);
+
         const updateStage = prevStage => {
             //flush stage
             //if this is too slow, for loops will be faster than map
@@ -28,6 +43,7 @@ export const useStage = (player, resetPlayer) => {
         // check if we collided
         if (player.collided) {
             resetPlayer();
+            return sweepRows(newStage);
         }
         return newStage;
 
@@ -37,5 +53,5 @@ export const useStage = (player, resetPlayer) => {
 
     }, [player, resetPlayer])
 
-    return [stage, setStage];
+    return [stage, setStage, rowsCleared];
 }

@@ -2,9 +2,13 @@ import './css/App.css';
 import Pane from './components/Pane';
 import { Tetris } from './components/pages/Tetris';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ScoreContextProvider } from './contexts/ScoreContextProvider';
+import { AuthContextProvider } from './contexts/AuthContextProvider';
 
 function App() {
     return (
+      <ScoreContextProvider>
+        <AuthContextProvider>
         <BrowserRouter>
             <div className="App">
                 <Routes>
@@ -15,6 +19,8 @@ function App() {
                 </Routes>
             </div>
         </BrowserRouter>
+        </AuthContextProvider>
+        </ScoreContextProvider>
     );
 }
 
