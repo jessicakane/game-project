@@ -11,6 +11,7 @@ import {checkCollision} from '../../gameHelpers';
 import {useInterval} from '../../hooks/useInterval';
 import { useGameStatus } from '../../hooks/useGameStatus';
 import { ScoreContext } from '../../contexts/ScoreContextProvider';
+import { AuthContext } from '../../contexts/AuthContextProvider';
 
 export const Tetris = () => {
 
@@ -18,6 +19,7 @@ export const Tetris = () => {
     const [gameOver, setGameOver] = useState(false);
 
     const {addNewScore, checkIfHighScore} = useContext(ScoreContext);
+    const {userId, token} = useContext(AuthContext);
 
     const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
@@ -102,8 +104,12 @@ export const Tetris = () => {
 
     useEffect(() => {
       if (gameOver) {
-        addNewScore(score);
-        checkIfHighScore(score);
+        const scoreObj = {
+          userId: userId,
+          score: score
+        }
+        addNewScore(scoreObj);
+        checkIfHighScore(scoreObj);
       }
     }, [gameOver])
 
