@@ -10,6 +10,7 @@ export const StyledStage = styled.div`
         width: 100%;
         max-width: 25%;
         padding: 0;
-        background: #111;`
+        background: #111;
+    `
 
 //these calculations are fairly responsive but not 100% -- maybe we can improve
