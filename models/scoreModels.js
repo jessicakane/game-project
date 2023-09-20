@@ -45,4 +45,16 @@ async function getUsersHighScores(userId) {
         }
 }
 
-module.exports = {createNewScore, getHighScores, getUsersHighScores};
+async function getLatestScore(userId) {
+    try {
+        const ObjectId = mongoose.Types.ObjectId;
+        const objectId = new ObjectId(userId);
+        const latestScore = await Score.findOne({userId: objectId}).sort({date: -1});
+        return latestScore;
+    } catch(error) {
+        console.error('Error fetching latest score:', error);
+        throw error;
+    }
+}
+
+module.exports = {createNewScore, getHighScores, getUsersHighScores, getLatestScore};

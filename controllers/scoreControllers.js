@@ -1,4 +1,4 @@
-const {createNewScore, getHighScores, getUsersHighScores} = require('../models/scoreModels');
+const {createNewScore, getHighScores, getUsersHighScores, getLatestScore} = require('../models/scoreModels');
 const mongoose = require('mongoose');
 
 const createNewScoreController = async(req, res) => {
@@ -26,8 +26,8 @@ const getHighScoresController = async(req, res) => {
 
 const getUsersHighScoresController = async(req, res) => {
     try {
-        console.log(req.body);
-        const highScores = await getUsersHighScores(req.body.userId);
+        
+        const highScores = await getUsersHighScores(req.params.userId);
         res.status(201).json(highScores);
     } catch(error) {
         console.error(error);
@@ -35,4 +35,14 @@ const getUsersHighScoresController = async(req, res) => {
     }
 }
 
-  module.exports = {createNewScoreController, getHighScoresController, getUsersHighScoresController}
+const getLatestScoreController = async(req, res) => {
+    try {
+        const latestScore = await getLatestScore(req.params.userId);
+        res.status(201).json(latestScore);
+    } catch(error) {
+        console.error(error);
+        res.status(500).send(error.message);
+    }
+}
+
+  module.exports = {createNewScoreController, getHighScoresController, getUsersHighScoresController, getLatestScoreController}

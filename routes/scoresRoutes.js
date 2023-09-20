@@ -5,6 +5,8 @@ const scoreControllers = require('../controllers/scoreControllers');
 
 router.post('/newscore', scoreControllers.createNewScoreController);
 router.get('/highscores', scoreControllers.getHighScoresController);
-router.post('/usersscores', scoreControllers.getUsersHighScoresController)
+router.get('/usersscores/:userId', scoreControllers.getUsersHighScoresController);
+router.get('/:userId', scoreControllers.getLatestScoreController);
+
 
 module.exports = router;

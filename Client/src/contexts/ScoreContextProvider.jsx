@@ -55,13 +55,24 @@ export const ScoreContextProvider = ({children}) => {
 
     const fetchUsersScores = async(userId) => {
         try {
-            const res = await axios.post('http://localhost:8080/api/scores/usersscores', {userId: userId});
+            const res = await axios.get(`http://localhost:8080/api/scores/usersscores/${userId}`);
             const highScores = res.data;
             console.log('users scores are', highScores);
             return highScores;
             } catch(error) {
                 console.error(error)
             }
+    }
+
+    const fetchUsersLatestScore = async(userId) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/api/scores/${userId}`);
+            const latestScore = res.data;
+            console.log('users latest score is:', latestScore);
+            return latestScore
+        } catch(error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -73,7 +84,8 @@ export const ScoreContextProvider = ({children}) => {
                 checkIfHighScore,
                 updateUserScore,
                 fetchHighScores,
-                fetchUsersScores
+                fetchUsersScores,
+                fetchUsersLatestScore
             }
         }>
             {children} </ScoreContext.Provider>
