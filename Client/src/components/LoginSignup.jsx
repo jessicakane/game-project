@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import '../css/LoginSignup.css';
+import axios from 'axios'; 
+import { AuthContext } from '../contexts/AuthContextProvider';
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginSignup = () => {
+
+    const navigate = useNavigate();
+
     const [loginFormHolder, setLoginFormHolder] = useState({
         email: '',
         password: ''
@@ -18,6 +25,8 @@ const LoginSignup = () => {
     const [loginOrSignup, setLoginOrSignup] = useState(false);
     const [errors, setErrors] = useState({});
     const [showError, setShowError] = useState(false);
+
+    const {signUserUp, logUserIn, token} = useContext(AuthContext);
 
     const handleLoginFields = (e) => {
         const { name, value } = e.target;
@@ -39,14 +48,14 @@ const LoginSignup = () => {
             newErrors.email = "Invalid email";
         }
 
-        const userNameValid = /^[a-zA-Z]{4,}$/.test(signupFormHolder.username);
+        const userNameValid = signupFormHolder.username.length >= 4;
         if (userNameValid) {
             newErrors.username = null;
         } else {
             newErrors.username = "Must contain at least 4 characters";
         }
 
-        const passwordValid = /^[a-zA-Z]{4,}$/.test(signupFormHolder.password);
+        const passwordValid = signupFormHolder.password >= 4;
         if (passwordValid) {
             newErrors.password = null;
         } else {
@@ -63,46 +72,40 @@ const LoginSignup = () => {
         setErrors(newErrors);
     }
 
-    const handleLoginButton = async (e) => {
-        // try {
-        //     const res = await axios.post('http://localhost:8080/login', { email: loginFormHolder.email, password: loginFormHolder.password });
-        //     setToken(res.data.token);
-        //     localStorage.setItem('token', res.data.token);
-        // } catch (err) {
-        //     console.log(err);
-        // }
+    const handleLoginButton = async(e) => {
+        e.preventDefault();
+        console.log('function running')
+        const userInfo = {
+            email: loginFormHolder.email, 
+            password: loginFormHolder.password
+        }
+        const res = await logUserIn(userInfo);
+        if (res) {
+            navigate('/game')
+        }
+
     };
 
     const handleSignupButton = async (e) => {
         e.preventDefault();
         validateLocally();
 
-        //setLoginOrSignup(false);
-        // const newUser = {
-        //     first_name: signupFormHolder.first_name,
-        //     last_name: signupFormHolder.last_name,
-        //     email: signupFormHolder.email,
-        //     phone_number: signupFormHolder.phone_number,
-        //     password: signupFormHolder.password,
-        //     rePassword: signupFormHolder.rePassword
-        // }
+        console.log('function running')
 
-        // try {
-        //     const res = await axios.post('http://localhost:8080/signup', newUser);
-        //     if (res.data.ok) {
-        //         setSignupFormHolder({
-        //             first_name: '',
-        //             last_name: '',
-        //             email: '',
-        //             phone_number: '',
-        //             password: '',
-        //             rePassword: ''
-        //         });
-        //     }
-        // } catch (err) {
-        //     setShowError(true);
-        //     console.log(err);
-        // }
+        const newUser = {
+          userName: signupFormHolder.username,
+          email: signupFormHolder.email,
+          password: signupFormHolder.password,
+          rePassword: signupFormHolder.rePassword,
+          admin: false,
+          highScore: 0
+        }
+
+        const res = await signUserUp(newUser, setSignupFormHolder);
+        if (!res) {
+            setShowError(true);
+        }
+        setLoginOrSignup(false);
     };
 
     return (
@@ -114,7 +117,7 @@ const LoginSignup = () => {
 
             <div className="bottom-login-signup">
                 {!loginOrSignup ? (<><p>Log in to play:</p>
-                    <Form>
+                <Form noValidate onSubmit={handleLoginButton}>
                         <FloatingLabel
                             controlId="floatingInput"
                             label="Email address"
@@ -127,7 +130,7 @@ const LoginSignup = () => {
                             <Form.Control type="password" placeholder="Password" name="password" value={loginFormHolder.password} onChange={handleLoginFields} />
                         </FloatingLabel>
 
-                        <Button type="submit" variant="dark" onClick={handleLoginButton}>Log In</Button>
+                        <Button type="submit" variant="dark">Log In</Button>
                         <p>Don't have an account yet? <a href="#" onClick={e => setLoginOrSignup(true)}>Sign up</a></p></Form></>)
 
                     : (<><p>Fill your details:</p>
