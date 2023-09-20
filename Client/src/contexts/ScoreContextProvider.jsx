@@ -53,6 +53,17 @@ export const ScoreContextProvider = ({children}) => {
         }
     }
 
+    const fetchUsersScores = async(userId) => {
+        try {
+            const res = await axios.post('http://localhost:8080/api/scores/usersscores', {userId: userId});
+            const highScores = res.data;
+            console.log('users scores are', highScores);
+            return highScores;
+            } catch(error) {
+                console.error(error)
+            }
+    }
+
     return (
         <ScoreContext.Provider value={
             {
@@ -61,7 +72,8 @@ export const ScoreContextProvider = ({children}) => {
                 addNewScore,
                 checkIfHighScore,
                 updateUserScore,
-                fetchHighScores
+                fetchHighScores,
+                fetchUsersScores
             }
         }>
             {children} </ScoreContext.Provider>

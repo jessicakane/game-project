@@ -1,5 +1,6 @@
 const {Score} = require('../schemas/scoresSchema');
-const {getUserNameById} = require('./userModels') 
+const {getUserNameById} = require('./userModels');
+const mongoose = require('mongoose');
 
 
 async function createNewScore(scoreData) {
@@ -32,4 +33,16 @@ async function getHighScores() {
     }
   }
 
-module.exports = {createNewScore, getHighScores};
+async function getUsersHighScores(userId) {
+    try {
+        const ObjectId = mongoose.Types.ObjectId;
+        const objectId = new ObjectId(userId);
+        const highScores = await Score.find({ userId: objectId }).sort({score: -1}).limit(5);
+        return highScores;
+        } catch (error) {
+            console.error('Error fetching users high scores:', error)
+            throw error;
+        }
+}
+
+module.exports = {createNewScore, getHighScores, getUsersHighScores};
