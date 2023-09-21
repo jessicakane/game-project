@@ -3,7 +3,7 @@ import { StyledHighScores, StyledHighScoreH2, StyledTable } from './styles/style
 import '../css/HighScores.css';
 import { ScoreContext } from '../contexts/ScoreContextProvider';
 
-const HighScores = () => {
+const HighScores = ({ finalScore, isNewRecord }) => {
 
     const { fetchHighScores } = useContext(ScoreContext);
     const [highScoresArr, setHighScoresArr] = useState([]);
@@ -16,7 +16,10 @@ const HighScores = () => {
     }, []);
 
     return (<div className="high-scores">
-        {highScoresArr.length === 5 && <><h2>High Scores</h2>
+        <h2>GAME OVER</h2>
+        <p className="final-score-line">Your score: {finalScore}</p>
+        {isNewRecord && <p className="new-record-line">New personal record &#127881;</p>}
+        {highScoresArr.length === 5 && <><h3>High Scores</h3>
             <table>
                 <tbody>
                     <tr>
