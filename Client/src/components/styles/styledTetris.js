@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledTetrisWrapper = styled.div`
-    width: 100%;
+    position: relative;
     height: 100%;
     box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
     `

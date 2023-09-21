@@ -4,9 +4,10 @@
 }
 
 .high-scores {
-    position: absolute;
-    top: 15%;
-    width: 25%;
+    position: relative;
+    right: 33.5%;
+    bottom: -150%;
+    width: 75vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,12 +35,12 @@ h2 {
 }
 
 .final-score-line {
-    font-size: 2.6vw;
+    font-size: 2.4vw;
     color: blue;
 }
 
 .new-record-line {
-    font-size: 2em;
+    font-size: 1.6vw;
     color: white;
 }
 
