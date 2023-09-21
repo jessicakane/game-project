@@ -9,7 +9,7 @@ export const StyledDisplay = styled.div`
     min-height: 30px;
     width: 100%;
     border-radius: 20px;
-    color: ${props => (props.gameOver ? 'red' : '#999')};
+    color: ${props => (props.gameover ? 'red' : '#999')};
     font-family: 'Audiowide', Pixel, Arial, Helvetica, sans-serif;
     font-size: 0.8rem;
     background: rgba( 0, 0, 0, 0.6 );

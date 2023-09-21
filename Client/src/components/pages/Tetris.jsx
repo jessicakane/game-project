@@ -116,7 +116,7 @@ export const Tetris = () => {
             setShowHighScores(true);
         }
     }, [gameOver])
-    
+
 
     return (
         <StyledTetrisWrapper className="tetris-wrapper" role="button" tabIndex="0" onKeyDown={e => move(e)}
@@ -124,9 +124,9 @@ export const Tetris = () => {
             <StyledTetris className="styled-tetris">
                 <Stage className="stage" stage={stage} showHighScores={showHighScores} />
                 <aside> {
-                    gameOver ? <><Display gameOver={gameOver}
+                    gameOver ? <><Display gameover={gameOver}
                         text="Game Over" />
-                        <Display text={`Score: ${score}`} /></>: <div>
+                        <Display text={`Score: ${score}`} /></> : <div>
                         <Display text={`Score: ${score}`} />
                         <Display text={`Rows: ${rows}`} />
                         <Display text={`Level: ${level}`} />
