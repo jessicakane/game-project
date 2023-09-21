@@ -17,10 +17,15 @@ export const Tetris = () => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const { addNewScore, checkIfHighScore, userHighScore } =
-    useContext(ScoreContext);
+  const {
+    addNewScore,
+    checkIfHighScore,
+    userHighScore,
+    highScores,
+    fetchUsersScores,
+    users5Scores,
+  } = useContext(ScoreContext);
   const { userId, token } = useContext(AuthContext);
-
   const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage, rowsCleared] = useStage(player, resetPlayer);
   const [score, setScore, rows, setRows, level, setLevel] =
@@ -108,6 +113,14 @@ export const Tetris = () => {
     }
   };
 
+  useEffect(() => {
+    fetchUsersScores(userId);
+  }, []);
+
+  useEffect(() => {
+    console.log('HELLO', users5Scores);
+  }, [users5Scores]);
+
   useInterval(() => {
     drop();
   }, dropTime);
@@ -137,7 +150,9 @@ export const Tetris = () => {
         {' '}
         <aside className="aside-left">
           {' '}
-          <Display text={`Your Record: ${userHighScore}`} />
+          <Display
+            text={`Your Top 5 Records: ${users5Scores[0].score} ${users5Scores[0].date} `}
+          />
         </aside>
         <Stage
           className="stage"
