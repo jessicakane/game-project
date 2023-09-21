@@ -124,8 +124,9 @@ export const Tetris = () => {
             <StyledTetris className="styled-tetris">
                 <Stage className="stage" stage={stage} showHighScores={showHighScores} />
                 <aside> {
-                    gameOver ? <Display gameOver={gameOver}
-                        text="Game Over" /> : <div>
+                    gameOver ? <><Display gameOver={gameOver}
+                        text="Game Over" />
+                        <Display text={`Score: ${score}`} /></>: <div>
                         <Display text={`Score: ${score}`} />
                         <Display text={`Rows: ${rows}`} />
                         <Display text={`Level: ${level}`} />

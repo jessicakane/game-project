@@ -3,6 +3,7 @@ import { StyledHighScores, StyledHighScoreH2, StyledTable } from './styles/style
 import '../css/HighScores.css';
 
 const HighScores = () => {
+    
     return (<div className="high-scores">
         <h2>High Scores</h2>
         <table>
