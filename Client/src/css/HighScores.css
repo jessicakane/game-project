@@ -1,5 +1,5 @@
 * {
-    font-size: 1em;
+    font-size: 1.4vw;
     font-family: 'Audiowide', Pixel, Arial, Helvetica, sans-serif;
 }
 
@@ -13,7 +13,7 @@
 }
 
 h2 {
-    font-size: 2.5em;
+    font-size: 3.2vw;
     color: red;
     animation: animate 1.5s linear infinite;
     margin-bottom: 1.5rem;
@@ -34,17 +34,17 @@ h2 {
 }
 
 .final-score-line {
-    font-size: 2em;
+    font-size: 2.6vw;
     color: blue;
 }
 
 .new-record-line {
-    font-size: 1.5em;
+    font-size: 2em;
     color: white;
 }
 
 h3 {
-    font-size: 2em;
+    font-size: 2.6vw;
     color: yellow;
 }
 

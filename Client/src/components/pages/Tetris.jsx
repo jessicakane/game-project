@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Stage } from '../Stage';
 import { Display } from '../Display';
 import { StartButton } from '../StartButton';
@@ -47,7 +47,6 @@ export const Tetris = () => {
         setScore(0);
         setRows(0);
         setLevel(0);
-
     }
 
     const drop = () => {
