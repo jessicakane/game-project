@@ -1,9 +1,6 @@
-* {
+.high-scores {
     font-size: 1.4vw;
     font-family: 'Audiowide', Pixel, Arial, Helvetica, sans-serif;
-}
-
-.high-scores {
     position: relative;
     right: 33.5%;
     bottom: -150%;
