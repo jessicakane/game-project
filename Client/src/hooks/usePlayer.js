@@ -59,12 +59,15 @@ export const usePlayer = () => {
             pos: {x: STAGE_WIDTH/2 - 2, y: 0},
             tetromino: randomTetromino().shape,
             collided: false,
-        }
+        };
         while (JSON.stringify(newPlayer.tetromino) === prevTetro) {
-            newPlayer.tetromino = randomTetromino().shape;
+            console.log('shapes were the same')
+                newPlayer.tetromino = randomTetromino().shape;
+            
         }
-        
+        console.log('shapes are', JSON.stringify(newPlayer.tetromino), prevTetro)
         setPlayer(newPlayer)
+        
     }, []) 
 
 

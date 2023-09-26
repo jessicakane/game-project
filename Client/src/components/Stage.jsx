@@ -4,11 +4,7 @@ import { StyledStage } from './styles/styledStage';
 import HighScores from './HighScores';
 
 export const Stage = ({ stage, showHighScores, finalScore, isNewRecord }) => {
-  useEffect(() => {
-    console.log(stage);
-    console.log(stage[0].length);
-    console.log(stage.length)
-  }, [])
+  
 
   return (
     <StyledStage className="styled-stage" width={stage[0].length} height={stage.length}>

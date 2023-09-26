@@ -13,6 +13,7 @@ import { useGameStatus } from '../../hooks/useGameStatus';
 import { ScoreContext } from '../../contexts/ScoreContextProvider';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 
+
 export const Tetris = () => {
 
     const [dropTime, setDropTime] = useState(null);
@@ -123,7 +124,10 @@ export const Tetris = () => {
         <StyledTetrisWrapper className="tetris-wrapper" role="button" tabIndex="0" onKeyDown={e => move(e)}
             onKeyUp={keyUp}>
             <StyledTetris className="styled-tetris">
+            
+                
                 <Stage className="stage" stage={stage} showHighScores={showHighScores} finalScore={score} isNewRecord={isNewHighScore} />
+
                 <aside> {
                     gameOver ? <>
                         <Display text={`Score: ${score}`} /></> : <div>
