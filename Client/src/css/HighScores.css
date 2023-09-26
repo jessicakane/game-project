@@ -17,6 +17,7 @@ h2 {
     margin-bottom: 1.5rem;
 }
 
+/*Animation for "Game Over" line: */
 @keyframes animate {
     0% {
         opacity: 0;
@@ -47,7 +48,6 @@ h3 {
 }
 
 table {
-    /* margin-top: 1.5em; */
     color: white;
     font-size: 1.2em;
 }
