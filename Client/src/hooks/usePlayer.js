@@ -54,18 +54,12 @@ export const usePlayer = () => {
 
     const resetPlayer = useCallback(() => {
 
-        const prevTetro = JSON.stringify(player.tetromino);
         const newPlayer = {
             pos: {x: STAGE_WIDTH/2 - 2, y: 0},
             tetromino: randomTetromino().shape,
             collided: false,
         };
-        while (JSON.stringify(newPlayer.tetromino) === prevTetro) {
-            console.log('shapes were the same')
-                newPlayer.tetromino = randomTetromino().shape;
-            
-        }
-        console.log('shapes are', JSON.stringify(newPlayer.tetromino), prevTetro)
+       
         setPlayer(newPlayer)
         
     }, []) 
